@@ -15,34 +15,6 @@
     "spec": {
       "description": "GitRepositorySpec defines the desired state of a Git repository.",
       "properties": {
-        "accessFrom": {
-          "description": "AccessFrom defines an Access Control List for allowing cross-namespace references to this object.",
-          "properties": {
-            "namespaceSelectors": {
-              "description": "NamespaceSelectors is the list of namespace selectors to which this ACL applies. Items in this list are evaluated using a logical OR operation.",
-              "items": {
-                "description": "NamespaceSelector selects the namespaces to which this ACL applies. An empty map of MatchLabels matches all namespaces in a cluster.",
-                "properties": {
-                  "matchLabels": {
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
-                    "type": "object"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array"
-            }
-          },
-          "required": [
-            "namespaceSelectors"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
         "gitImplementation": {
           "default": "go-git",
           "description": "Determines which git client library to use. Defaults to go-git, valid values are ('go-git', 'libgit2').",
@@ -69,7 +41,7 @@
                 "description": "Reference to a GitRepository to include.",
                 "properties": {
                   "name": {
-                    "description": "Name of the referent.",
+                    "description": "Name of the referent",
                     "type": "string"
                   }
                 },
@@ -104,6 +76,7 @@
           "description": "The Git reference to checkout and monitor for changes, defaults to master branch.",
           "properties": {
             "branch": {
+              "default": "master",
               "description": "The Git branch to checkout, defaults to master.",
               "type": "string"
             },
@@ -124,10 +97,10 @@
           "additionalProperties": false
         },
         "secretRef": {
-          "description": "The secret name containing the Git credentials. For HTTPS repositories the secret must contain username and password fields. For SSH repositories the secret must contain identity and known_hosts fields.",
+          "description": "The secret name containing the Git credentials. For HTTPS repositories the secret must contain username and password fields. For SSH repositories the secret must contain identity, identity.pub and known_hosts fields.",
           "properties": {
             "name": {
-              "description": "Name of the referent.",
+              "description": "Name of the referent",
               "type": "string"
             }
           },
@@ -142,8 +115,8 @@
           "type": "boolean"
         },
         "timeout": {
-          "default": "60s",
-          "description": "The timeout for remote Git operations like cloning, defaults to 60s.",
+          "default": "20s",
+          "description": "The timeout for remote Git operations like cloning, defaults to 20s.",
           "type": "string"
         },
         "url": {
@@ -165,7 +138,7 @@
               "description": "The secret name containing the public keys of all trusted Git authors.",
               "properties": {
                 "name": {
-                  "description": "Name of the referent.",
+                  "description": "Name of the referent",
                   "type": "string"
                 }
               },
@@ -191,16 +164,13 @@
       "additionalProperties": false
     },
     "status": {
-      "default": {
-        "observedGeneration": -1
-      },
       "description": "GitRepositoryStatus defines the observed state of a Git repository.",
       "properties": {
         "artifact": {
           "description": "Artifact represents the output of the last successful repository sync.",
           "properties": {
             "checksum": {
-              "description": "Checksum is the SHA256 checksum of the artifact.",
+              "description": "Checksum is the SHA1 checksum of the artifact.",
               "type": "string"
             },
             "lastUpdateTime": {
@@ -290,7 +260,7 @@
             "description": "Artifact represents the output of a source synchronisation.",
             "properties": {
               "checksum": {
-                "description": "Checksum is the SHA256 checksum of the artifact.",
+                "description": "Checksum is the SHA1 checksum of the artifact.",
                 "type": "string"
               },
               "lastUpdateTime": {
@@ -321,7 +291,7 @@
           "type": "array"
         },
         "lastHandledReconcileAt": {
-          "description": "LastHandledReconcileAt holds the value of the most recent reconcile request value, so a change of the annotation value can be detected.",
+          "description": "LastHandledReconcileAt holds the value of the most recent reconcile request value, so a change can be detected.",
           "type": "string"
         },
         "observedGeneration": {

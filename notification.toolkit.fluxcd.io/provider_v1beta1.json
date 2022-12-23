@@ -24,7 +24,7 @@
           "description": "CertSecretRef can be given the name of a secret containing a PEM-encoded CA certificate (`caFile`)",
           "properties": {
             "name": {
-              "description": "Name of the referent.",
+              "description": "Name of the referent",
               "type": "string"
             }
           },
@@ -47,7 +47,7 @@
           "description": "Secret reference containing the provider webhook URL using \"address\" as data key",
           "properties": {
             "name": {
-              "description": "Name of the referent.",
+              "description": "Name of the referent",
               "type": "string"
             }
           },
@@ -56,10 +56,6 @@
           ],
           "type": "object",
           "additionalProperties": false
-        },
-        "suspend": {
-          "description": "This flag tells the controller to suspend subsequent events handling. Defaults to false.",
-          "type": "boolean"
         },
         "type": {
           "description": "Type of provider",
@@ -81,9 +77,7 @@
             "lark",
             "matrix",
             "opsgenie",
-            "alertmanager",
-            "grafana",
-            "githubdispatch"
+            "alertmanager"
           ],
           "type": "string"
         },

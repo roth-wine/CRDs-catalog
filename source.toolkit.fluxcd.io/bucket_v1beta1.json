@@ -15,34 +15,6 @@
     "spec": {
       "description": "BucketSpec defines the desired state of an S3 compatible bucket",
       "properties": {
-        "accessFrom": {
-          "description": "AccessFrom defines an Access Control List for allowing cross-namespace references to this object.",
-          "properties": {
-            "namespaceSelectors": {
-              "description": "NamespaceSelectors is the list of namespace selectors to which this ACL applies. Items in this list are evaluated using a logical OR operation.",
-              "items": {
-                "description": "NamespaceSelector selects the namespaces to which this ACL applies. An empty map of MatchLabels matches all namespaces in a cluster.",
-                "properties": {
-                  "matchLabels": {
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
-                    "type": "object"
-                  }
-                },
-                "type": "object",
-                "additionalProperties": false
-              },
-              "type": "array"
-            }
-          },
-          "required": [
-            "namespaceSelectors"
-          ],
-          "type": "object",
-          "additionalProperties": false
-        },
         "bucketName": {
           "description": "The bucket name.",
           "type": "string"
@@ -81,7 +53,7 @@
           "description": "The name of the secret containing authentication credentials for the Bucket.",
           "properties": {
             "name": {
-              "description": "Name of the referent.",
+              "description": "Name of the referent",
               "type": "string"
             }
           },
@@ -96,8 +68,8 @@
           "type": "boolean"
         },
         "timeout": {
-          "default": "60s",
-          "description": "The timeout for download operations, defaults to 60s.",
+          "default": "20s",
+          "description": "The timeout for download operations, defaults to 20s.",
           "type": "string"
         }
       },
@@ -110,16 +82,13 @@
       "additionalProperties": false
     },
     "status": {
-      "default": {
-        "observedGeneration": -1
-      },
       "description": "BucketStatus defines the observed state of a bucket",
       "properties": {
         "artifact": {
           "description": "Artifact represents the output of the last successful Bucket sync.",
           "properties": {
             "checksum": {
-              "description": "Checksum is the SHA256 checksum of the artifact.",
+              "description": "Checksum is the SHA1 checksum of the artifact.",
               "type": "string"
             },
             "lastUpdateTime": {
@@ -204,7 +173,7 @@
           "type": "array"
         },
         "lastHandledReconcileAt": {
-          "description": "LastHandledReconcileAt holds the value of the most recent reconcile request value, so a change of the annotation value can be detected.",
+          "description": "LastHandledReconcileAt holds the value of the most recent reconcile request value, so a change can be detected.",
           "type": "string"
         },
         "observedGeneration": {
