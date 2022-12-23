@@ -15,6 +15,10 @@
     "spec": {
       "description": "ScheduleSpec defines the specification for a Velero schedule",
       "properties": {
+        "paused": {
+          "description": "Paused specifies whether the schedule is paused or not",
+          "type": "boolean"
+        },
         "schedule": {
           "description": "Schedule is a Cron expression defining when to run the Backup.",
           "type": "string"
@@ -26,8 +30,14 @@
               "description": "CSISnapshotTimeout specifies the time used to wait for CSI VolumeSnapshot status turns to ReadyToUse during creation, before returning error as timeout. The default value is 10 minute.",
               "type": "string"
             },
+            "defaultVolumesToFsBackup": {
+              "description": "DefaultVolumesToFsBackup specifies whether pod volume file system backup should be used for all volumes by default.",
+              "nullable": true,
+              "type": "boolean"
+            },
             "defaultVolumesToRestic": {
-              "description": "DefaultVolumesToRestic specifies whether restic should be used to take a backup of all pod volumes by default.",
+              "description": "DefaultVolumesToRestic specifies whether restic should be used to take a backup of all pod volumes by default. \n Deprecated: this field is no longer used and will be removed entirely in future. Use DefaultVolumesToFsBackup instead.",
+              "nullable": true,
               "type": "boolean"
             },
             "excludedNamespaces": {
@@ -115,7 +125,8 @@
                                 "key",
                                 "operator"
                               ],
-                              "type": "object"
+                              "type": "object",
+                              "additionalProperties": false
                             },
                             "type": "array"
                           },
@@ -127,7 +138,8 @@
                             "type": "object"
                           }
                         },
-                        "type": "object"
+                        "type": "object",
+                        "additionalProperties": false
                       },
                       "name": {
                         "description": "Name is the name of this hook.",
@@ -169,13 +181,15 @@
                               "required": [
                                 "command"
                               ],
-                              "type": "object"
+                              "type": "object",
+                              "additionalProperties": false
                             }
                           },
                           "required": [
                             "exec"
                           ],
-                          "type": "object"
+                          "type": "object",
+                          "additionalProperties": false
                         },
                         "type": "array"
                       },
@@ -215,13 +229,15 @@
                               "required": [
                                 "command"
                               ],
-                              "type": "object"
+                              "type": "object",
+                              "additionalProperties": false
                             }
                           },
                           "required": [
                             "exec"
                           ],
-                          "type": "object"
+                          "type": "object",
+                          "additionalProperties": false
                         },
                         "type": "array"
                       }
@@ -229,13 +245,15 @@
                     "required": [
                       "name"
                     ],
-                    "type": "object"
+                    "type": "object",
+                    "additionalProperties": false
                   },
                   "nullable": true,
                   "type": "array"
                 }
               },
-              "type": "object"
+              "type": "object",
+              "additionalProperties": false
             },
             "includeClusterResources": {
               "description": "IncludeClusterResources specifies whether cluster-scoped resources should be included for consideration in the backup.",
@@ -287,7 +305,8 @@
                       "key",
                       "operator"
                     ],
-                    "type": "object"
+                    "type": "object",
+                    "additionalProperties": false
                   },
                   "type": "array"
                 },
@@ -299,7 +318,8 @@
                   "type": "object"
                 }
               },
-              "type": "object"
+              "type": "object",
+              "additionalProperties": false
             },
             "metadata": {
               "properties": {
@@ -310,7 +330,8 @@
                   "type": "object"
                 }
               },
-              "type": "object"
+              "type": "object",
+              "additionalProperties": false
             },
             "orLabelSelectors": {
               "description": "OrLabelSelectors is list of metav1.LabelSelector to filter with when adding individual objects to the backup. If multiple provided they will be joined by the OR operator. LabelSelector as well as OrLabelSelectors cannot co-exist in backup request, only one of them can be used.",
@@ -342,7 +363,8 @@
                         "key",
                         "operator"
                       ],
-                      "type": "object"
+                      "type": "object",
+                      "additionalProperties": false
                     },
                     "type": "array"
                   },
@@ -354,7 +376,8 @@
                     "type": "object"
                   }
                 },
-                "type": "object"
+                "type": "object",
+                "additionalProperties": false
               },
               "nullable": true,
               "type": "array"
@@ -363,7 +386,7 @@
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "OrderedResources specifies the backup order of resources of specific Kind. The map key is the Kind name and value is a list of resource names separated by commas. Each resource name has format \"namespace/resourcename\".  For cluster resources, simply use \"resourcename\".",
+              "description": "OrderedResources specifies the backup order of resources of specific Kind. The map key is the resource name and value is a list of object names separated by commas. Each resource name has format \"namespace/objectname\".  For cluster resources, simply use \"objectname\".",
               "nullable": true,
               "type": "object"
             },
@@ -388,7 +411,8 @@
               "type": "array"
             }
           },
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false
         },
         "useOwnerReferencesInBackup": {
           "description": "UseOwnerReferencesBackup specifies whether to use OwnerReferences on backups created by this Schedule.",
@@ -400,7 +424,8 @@
         "schedule",
         "template"
       ],
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false
     },
     "status": {
       "description": "ScheduleStatus captures the current state of a Velero schedule",
@@ -428,7 +453,8 @@
           "type": "array"
         }
       },
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false
     }
   },
   "type": "object"
